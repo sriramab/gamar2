@@ -1,0 +1,9 @@
+• at loading, gamar should check whether GAMA is installed. If not, it
+should return a message and give instructions on how to install GAMA.
+• if GAMA is installed, find a way for gamar to automatically find the path to
+the GAMA program
+• in .onLoad: check whether the "gama" option is already defined. If yes,
+what to do??? For now, just show an error message.
+• remove the "gama" option in the onUnload() function, if it didn't exist
+before the loading of the package. If it did, what to do then??? For now, just
+show an error message.

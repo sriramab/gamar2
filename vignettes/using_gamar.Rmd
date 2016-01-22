@@ -1,0 +1,103 @@
+---
+title: "Using gamar"
+author: "Marc Choisy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include=F}
+knitr::knit_hooks$set(margin = function(before,options,envir) {
+  if(before) par(mgp=c(1.5,0.5,0),bty="n",plt=c(.105,.97,.13,.97))
+  else NULL
+})
+
+knitr::opts_chunk$set(margin=T,prompt=T,comment="",collapse=T,cache=T,
+                      dev.args=list(pointsize=11),fig.height=3.5,
+                      fig.width=4.24725,fig.retina=2,fig.align="center")
+
+dir.create("tmp")
+knitr::opts_knit$set(root.dir=paste0(getwd(),"/tmp"))
+```
+
+This vignette shows how to install and use the `gamar` package.
+
+## Installing `gamar`
+
+The package is currently on the GitHub repository. To install it from this
+repository you can use the `install_github` function from the `devtools`
+package. If this package is not installed on your system, install it
+
+```{r eval=F}
+install.packages("devtools")
+```
+
+Then you can install the `gamar` package by typing:
+
+```{r eval=F}
+devtools::install_github("choisy/gamar")
+```
+
+Note that the `gamar` package depends on the `XML` package. The installation of
+`gamar` package automatically installs the `XML` too, if not already installed
+on your system. Then, you can load and attach the `gamar` library:
+
+```{r}
+library(gamar)
+```
+
+Note that you need the GAMA platform (version > 1.6.2) to be installed on your
+machine. For now, you have to set the path to the GAMA folder yourself:
+
+```{r eval=F}
+defpath("absolute_path_to_your_GAMA_folder")
+```
+
+## An simple SIR epidemic model
+
+There are a number of example files in the `examples` directory of the library:
+
+```{r}
+(f <- system.file("examples",package="gamar"))
+dir(f)
+```
+
+Move the GAML and XML files of the SIR model and experiment to the working
+directory:
+
+```{r}
+dir()
+file.copy(paste0(f,"/sir.xml"),".")
+file.copy(paste0(f,"/sir.gaml"),".")
+dir()
+```
+
+Now, you can run the experiment:
+
+```{r}
+system.time(simulation <- run("sir.xml"))
+```
+
+And explore and plot the results:
+
+```{r}
+str(simulation)
+head(simulation)
+with(simulation, {
+  plot(Susceptible,col="blue",type="l",lwd=2,
+       xlab="time step",ylab="number of individuals")
+  lines(Infectious,col="red",lwd=2)
+  lines(Recovered,col="green",lwd=2)
+})
+legend("right",c("susceptible","infected","recovered"),
+       col=c("blue","red","green"),lwd=2,lty=1,bty="n")
+```
+
+```{r include=F, cache=F}
+knitr::opts_knit$set(root.dir="..")
+unlink("tmp",T,T)
+```
+

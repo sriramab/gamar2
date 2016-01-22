@@ -1,0 +1,13 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+vignettes/template.Rmd
+vignettes/tmp
+vignettes/using_gamar_cache
+workspace
+sir.gaml
+sir.xml
+output*
+.gitignore
+.Rbuildignore
+.Rhistory
+.RData
