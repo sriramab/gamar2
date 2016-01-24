@@ -19,7 +19,7 @@ A data frame with, for each column, the values of the model state
 variables for each time step.
 }
 \description{
-Run a GAMA experiment.
+Run a GAMA experiment from an XML file.
 }
 \details{
 If _experiment_ is an XML, it should contains the path to a GAML
@@ -28,8 +28,8 @@ should contain three sections defining (1) the world (global), (2) the
 species (species), and (3) the experiments (experiment). The XML file should
 contain a Simulation header and two slots: (1) Parameters et (2) Outputs. See
 the _demo_ folder of the _gamar_ library for examples of such files. See
-https://github.com/gama-platform/gama/wiki/G__Headless for more detailed
-information on how these XML and GAML files should be structured.
+\url{https://github.com/gama-platform/gama/wiki/G__Headless} for more
+detailed information on how these XML and GAML files should be structured.
 }
 \examples{
 ## Running an SIR epidemic model.

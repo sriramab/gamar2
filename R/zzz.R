@@ -1,7 +1,9 @@
-#   Build and Reload Package:  'Cmd + Shift + B'
-#   Check Package:             'Cmd + Shift + E'
-#   Test Package:              'Cmd + Shift + T'
-
+#' Define the GAMA path
+#'
+#' Define the path of GAMA Java plugins.
+#'
+#' @param path Absolute path to the GAMA folder.
+#' @keywords internal
 defpath <- function(path) {
   gamapath <- paste0(path,"/plugins")
   plugins <- grep("*.jar",dir(gamapath),value=T)

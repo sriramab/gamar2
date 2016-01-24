@@ -1,7 +1,10 @@
+#' Check a directory
+#'
+#' Checks the existance of the directory "dir". If it exists, it renames it.
+#'
+#' @param dir Name of the directory to check and optionally rename.
+#' @keywords internal
 checkdir <- function(dir) {
-# This function checks the existance of the directory "dir". If it exists, it
-# renames it.
-# dir: character, name of the directory to check and optionally rename.
   if(dir.exists(dir)) {
 # Looking for the available index:
     index <- 2
@@ -15,6 +18,14 @@ checkdir <- function(dir) {
 
 ################################################################################
 
+#' Call GAMA
+#'
+#' Call the simualation platform GAMA to run an experiment described in an XML
+#' file.
+#'
+#' @inheritParams run
+#' @param output Name of the output directory.
+#' @keywords internal
 callgama <- function(experiment,output="output",Xms=512,Xmx=2048) {
   system(paste0("java -cp ",getOption("gamar.plugins")," -Xms",Xms,"m -Xmx",Xmx,
                 "m ","-Djava.awt.headless=true org.eclipse.core.launcher.Main ",
@@ -24,10 +35,14 @@ callgama <- function(experiment,output="output",Xms=512,Xmx=2048) {
 
 ################################################################################
 
+#' Reads a GAMA output file
+#'
+#' Reads a GAMA output in an XML file and return in the form of a datarame with
+#' one column per "monitor".
+#'
+#'  @param file Name of the XML file to read.
+#'  @keywords internal
 readxml <- function(file) {
-# This function reads an GAMA XML output "file" and return it in the form of a
-# dataframe with one column per "monitor":
-# "file": character, name of the file to read.
   out <- XML::xmlToList(XML::xmlParse(file))
   out[[length(out)]] <- NULL # remove the last item that is NA
   n <- length(out[[1]]) # number of variable slots per time step
@@ -45,19 +60,21 @@ readxml <- function(file) {
 
 #' Run a GAMA experiment
 #'
-#' @description Run a GAMA experiment.
-#' @param experiment Either an R experiment object or the path to an XML file
-#' describing the experiment.
-#' @param Xms Initial memory allocation pool for the Java Virtual Machine.
-#' @param Xmx Maximal memory allocation pool for the Java Virtual Machine.
-#' @details If _experiment_ is an XML, it should contains the path to a GAML
+#' Run a GAMA experiment from an XML file.
+#'
+#' If _experiment_ is an XML, it should contains the path to a GAML
 #' file that describes the model. A GAML file starts with a model name and
 #' should contain three sections defining (1) the world (global), (2) the
 #' species (species), and (3) the experiments (experiment). The XML file should
 #' contain a Simulation header and two slots: (1) Parameters et (2) Outputs. See
 #' the _demo_ folder of the _gamar_ library for examples of such files. See
-#' https://github.com/gama-platform/gama/wiki/G__Headless for more detailed
-#' information on how these XML and GAML files should be structured.
+#' \url{https://github.com/gama-platform/gama/wiki/G__Headless} for more
+#' detailed information on how these XML and GAML files should be structured.
+#'
+#' @param experiment Either an R experiment object or the path to an XML file
+#' describing the experiment.
+#' @param Xms Initial memory allocation pool for the Java Virtual Machine.
+#' @param Xmx Maximal memory allocation pool for the Java Virtual Machine.
 #' @return A data frame with, for each column, the values of the model state
 #' variables for each time step.
 #' @author Marc Choisy, Jean-Daniel Zucker
