@@ -5,3 +5,5 @@ workspace
 sir.gaml
 sir.xml
 vignettes/using_gamar_cache/
+.DS_Store
+R/.run.R.swp

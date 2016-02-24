@@ -99,7 +99,11 @@ legend("right",c("susceptible","infected","recovered"),
 ```
 
 ```{r include=F, cache=F}
-knitr::opts_knit$set(root.dir="..")
+setwd("..")
+knitr::opts_knit$set(root.dir=".")
+```
+
+```{r include=F, cache=F}
 unlink("tmp",T,T)
 ```
 
