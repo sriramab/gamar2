@@ -61,5 +61,7 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
                               "-application msi.gama.headless.id4 -hpc ",hpc," ",
                               parameterxmlfile," ",outputdirectory),
                        ignore.stdout=F,ignore.stderr=T)
+
   if(trycommand>0) return(-1)
+  return(dir(path = parameterxmlfile, pattern = "*.xml"))
 }
