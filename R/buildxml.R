@@ -1,7 +1,7 @@
 buildxmlfromexperimentplan <- function(experimentplan) {
   out <- "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><Experiment_plan>"
-  i <- 0
-  while(i<length(experimentplan)) {
+  i <- 1
+  while(i<length(experimentplan)+1) {
     out <-paste0(out,buildxmlfromsimulation(experimentplan[i]$Simulation))
     i <- i + 1
   }
@@ -21,9 +21,9 @@ buildxmlfromsimulation <- function(sim) {
   result <- paste0("<Simulation id=\"",id,"\" sourcePath=\"",sourcepath,
                    "\" experiment=\"",experimentname,"\" finalStep=\"",
                    finalstep,"\" seed=\"",seed,"\">")
-  i <- 0
+  i <- 1
   result <- paste0(result,"<Parameters>")
-  while(i<length(siminput)) {
+  while(i<length(siminput)+1) {
     name <- siminput[i]$Parameter["name"]
     type <- siminput[i]$Parameter["type"]
     value <- siminput[i]$Parameter["value"]
@@ -31,8 +31,8 @@ buildxmlfromsimulation <- function(sim) {
     i <- i + 1
   }
   result <- paste0(result,"</Parameters><Outputs>")
-  i <- 0
-  while(i<length(simoutput)) {
+  i <- 1
+  while(i<length(simoutput)+1) {
     name <- simoutput[i]$Output["name"]
     id <- simoutput[i]$Output["id"]
     framerate <- simoutput[i]$Output["framerate"]
