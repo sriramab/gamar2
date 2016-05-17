@@ -1,4 +1,3 @@
-#toto
 defpath("/Applications/Gama_1_7.app")
 rootexperiment <- getmodelparameter("examples/sir.gaml","sir")
 outputs <- getoutputnames(rootexperiment)
