@@ -25,7 +25,7 @@ defpath <- function(path) {
 
 
 .onAttach <- function(...) {
-  packageStartupMessage("Welcome to gamar v0.1!")
+  packageStartupMessage("Welcome to gamar v1.0!")
   packageStartupMessage("WARNING: GAMA 1.7.0 needs to be installed on your machine.")
   packageStartupMessage("Check www.gama-platform.org for installation instructions.")
 #  defpath("/Users/choisy/Applications/Gama")
