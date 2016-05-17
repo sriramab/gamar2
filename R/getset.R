@@ -62,9 +62,9 @@ setfinalstep <- function(dictionary,value)
 
 getoutputnames <- function(dictionary) {
   simoutput <- dictionary$Simulation$Outputs
-  i <- 0
+  i <- 1
   outlist <- list()
-  while(i<length(simoutput)) {
+  while(i<length(simoutput)+1) {
     out <- simoutput[i]$Output["name"]
     outlist <- append(outlist,out)
     i <- i + 1
@@ -76,9 +76,9 @@ getoutputnames <- function(dictionary) {
 
 getparameternames<- function(dictionary) {
   siminput <- dictionary$Simulation$Parameters
-  i <- 0
+  i <- 1
   outlist <- list()
-  while(i < length(siminput)) {
+  while(i < length(siminput)+1) {
     out <- siminput[i]$Parameter["name"]
     outlist <- append(outlist,out)
     i <- i + 1
@@ -90,8 +90,8 @@ getparameternames<- function(dictionary) {
 
 setparametervalue <- function(dictionary,name,value) {
   siminput <- dictionary$Simulation$Parameters
-  i <- 0
-  while(i<length(siminput)) {
+  i <- 1
+  while(i<length(siminput)+1) {
     if(name == dictionary$Simulation$Parameters[i]$Parameter["name"])
       dictionary$Simulation$Parameters[i]$Parameter["value"] <- value
     i <- i + 1
@@ -104,8 +104,8 @@ setparametervalue <- function(dictionary,name,value) {
 setoutputframerate <- function(dictionary,name,value) {
   siminput <- dictionary$Simulation$Outputs
   outlist <- list()
-  i <- 0
-  while(i<length(siminput)) {
+  i <- 1
+  while(i<length(siminput)+1) {
     if(name != dictionary$Simulation$Outputs[i]$Output["name"] )
     { dictionary$Simulation$Outputs[i]$Output["framerate"] <- value }
     i <- i + 1
