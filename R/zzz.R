@@ -4,11 +4,25 @@
 #'
 #' @param path Absolute path to the GAMA folder.
 #' @keywords internal
+#defpath <- function(path) {
+#  gamapath <- paste0(path,"/plugins")
+#  plugins <- grep("*.jar",dir(gamapath),value=T)
+#  options(gamar.plugins=paste(paste0(gamapath,"/",plugins),collapse=":"))
+#}
 defpath <- function(path) {
-  gamapath <- paste0(path,"/plugins")
-  plugins <- grep("*.jar",dir(gamapath),value=T)
-  options(gamar.plugins=paste(paste0(gamapath,"/",plugins),collapse=":"))
+  os <- paste0(Sys.info()["sysname"])
+  # if we use OSX, the plugin is located in the Contents/eclipse sub directory of
+  # gama otherwise it is at its root:
+  subpath <- ifelse(os=="Darwin","/Contents/eclipse","")
+  gamapath <- paste0(path,subpath,"/plugins")
+  plugins <- grep("org.eclipse.equinox.launcher_.*",dir(gamapath),value=T)
+  options(gamar.plugins = paste(paste0(gamapath,"/",plugins),collapse=":"))
+  defaultjar <- paste0(gamapath,"/",plugins)
+  options(gamar.startjar=defaultjar)
+  options(gamar.Xmx="2048m")
+  options(gamar.Xms="512m")
 }
+
 
 .onAttach <- function(...) {
   packageStartupMessage("Welcome to gamar v0.1!")
@@ -18,5 +32,8 @@ defpath <- function(path) {
 }
 
 .onDetach <- function(...) {
-  options(gamar.plugins=NULL)
+#  options(gamar.plugins=NULL)
+  options(gamar.startjar=NULL)
+  options(gamar.Xmx=NULL)
+  options(gamar.Xms=NULL)
 }
