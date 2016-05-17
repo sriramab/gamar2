@@ -159,18 +159,19 @@ getexperimentoutput <- function(simulation)
 
 getoutputs <- function(simulation_result, outputs)
 {
-  out2 <- lapply(out,function(x) {x[which(names(x)=="Variable")]})
-  ex <- c("main_display","Number of predators")
+  out2 <- lapply(simulation_result,function(x) {x[which(names(x)=="Variable")]})
   thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
-  sel <- which(thenames %in% ex)
+  sel <- which(thenames %in% outputs)
   out3 <- lapply(out2,function(x)x[sel])
   out3 <- out3[-length(out3)]
-  output <- as.data.frame(t(sapply(out3,function(y)sapply(y,function(x)x$text))),stringsAsFactors=F)
-  output$steps <- as.numeric(sapply(out[-length(out)],function(x)x$.attrs["id"]))
+  output <- sapply(out3,function(y)sapply(y,function(x)x$text))
+  if(!is.null(dim(output))) output <- t(output) else output <- as.data.frame(output,stringsAsFactors=F)
+  output$steps <- as.numeric(sapply(simulation_result[-length(simulation_result)],function(x)x$.attrs["id"]))
   rownames(output) <- NULL
 }
 
 getoutputfile <- function(path)
 {
-  XML::xmlToList(XML::xmlParse(outfile))
+  XML::xmlToList(XML::xmlParse(path))
 }
+

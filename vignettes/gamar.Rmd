@@ -137,7 +137,7 @@ experimentplan <- addtoexperimentplan(experimentplan,experimentclone2)
 Running the experiment plan on one core:
 
 ```{r}
-startexperimentplan(experimentplan,hpc=1)
+outfiles <- startexperimentplan(experimentplan,hpc=2)
 ```
 
 
