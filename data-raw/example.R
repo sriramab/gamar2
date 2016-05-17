@@ -1,6 +1,6 @@
-defpath("/Applications/Gama_1_7.app")
+#defpath("/Applications/Gama_1_7.app") ## Marc
+#defpath("/Applications/Gama.app") ## Jean-Daniel et Nicolas
 rootexperiment <- getmodelparameter("examples/sir.gaml","sir")
-#rootexperiment <- getmodelparameter("sir.gaml","sir")
 outputs <- getoutputnames(rootexperiment)
 parameters <- getparameternames(rootexperiment)
 experimentclone1 <- setparametervalue(rootexperiment,"S",990)
