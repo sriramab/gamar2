@@ -140,3 +140,37 @@ getmodelparameter <- function(modelfile,experimentname) {
   if(trycommand>0) return(-1)
   XML::xmlToList(XML::xmlParse(outfile))
 }
+
+
+#
+#
+#
+#
+getexperimentid <- function(simulation_result)
+{
+  return(simulation$.attrs["id"])
+}
+
+getexperimentoutput <- function(simulation)
+{
+  out2 <- lapply(simulation,function(x) {x[which(names(x)=="Variable")]})
+  unname(sapply(out2[[1]],function(x)x$.attrs))
+}
+
+getoutputs <- function(simulation_result, outputs)
+{
+  out2 <- lapply(out,function(x) {x[which(names(x)=="Variable")]})
+  ex <- c("main_display","Number of predators")
+  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
+  sel <- which(thenames %in% ex)
+  out3 <- lapply(out2,function(x)x[sel])
+  out3 <- out3[-length(out3)]
+  output <- as.data.frame(t(sapply(out3,function(y)sapply(y,function(x)x$text))),stringsAsFactors=F)
+  output$steps <- as.numeric(sapply(out[-length(out)],function(x)x$.attrs["id"]))
+  rownames(output) <- NULL
+}
+
+getoutputfile <- function(path)
+{
+  XML::xmlToList(XML::xmlParse(outfile))
+}
