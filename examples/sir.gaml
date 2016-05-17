@@ -10,12 +10,12 @@ global {
   int environment_size <- 100; // size of world
   geometry shape <- square(environment_size); // grid
   int neighborhood <- 2; // neighborhood
-// The initialator:
+// The initializer:
 	init {
 		create individual number: S {
       is_susceptible <- true;
-      is_infected <-  false;
-      is_recovered <-  false;
+      is_infected <- false;
+      is_recovered <- false;
     }
     create individual number: I {
       is_susceptible <-  false;
@@ -70,5 +70,5 @@ experiment sir type: gui {
   parameter "R" var: R;
 	parameter "beta" var: beta;
 	parameter "gamma" var: gamma;
-	output{monitor "S" value: S;}
+	output{monitor "susceptibles" value: length(individual where(each.is_susceptible));}
 }
