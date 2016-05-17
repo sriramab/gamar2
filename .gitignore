@@ -1,7 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-vignettes/using_gamar_cache/
 .DS_Store
 R/.run.R.swp
 inst/doc
+vignettes/gamar_cache
