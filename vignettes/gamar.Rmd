@@ -1,6 +1,6 @@
 ---
 title: "Using gamar"
-author: "Marc Choisy"
+author: "Marc Choisy, Nicolas Marilleau, Jean-Daniel Zucker"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -22,8 +22,6 @@ knitr::opts_chunk$set(margin=T,prompt=T,comment="",collapse=T,cache=T,
 dir.create("tmp")
 knitr::opts_knit$set(root.dir=paste0(getwd(),"/tmp"))
 ```
-
-![](../inst/images/logo.jpg)
 
 This vignette shows how to install and use the `gamar` package.
 
@@ -51,14 +49,18 @@ on your system. Then, you can load and attach the `gamar` library:
 library(gamar)
 ```
 
-Note that you need the GAMA platform (version > 1.6.2) to be installed on your
+Note that you need the GAMA platform (version > 1.7.0) to be installed on your
 machine. For now, you have to set the path to the GAMA folder yourself:
 
 ```{r eval=F}
-defpath("absolute_path_to_your_GAMA_folder")
+defpath("path_to_your_GAMA_folder")
 ```
 
-## An simple SIR epidemic model
+On most Mac it would be:
+
+```{r}
+defpath("/Applications/Gama.app")
+```
 
 There are a number of example files in the `examples` directory of the library:
 
@@ -72,31 +74,74 @@ directory:
 
 ```{r}
 dir()
-file.copy(paste0(f,"/sir.xml"),".")
 file.copy(paste0(f,"/sir.gaml"),".")
 dir()
 ```
 
-Now, you can run the experiment:
+Loading the `sir` experiment defined in the `sir.gaml` file:
 
 ```{r}
-system.time(simulation <- run("sir.xml"))
+experimentclone1 <- getmodelparameter("sir.gaml","sir")
 ```
 
-And explore and plot the results:
+The variable monitored during the simulation:
 
 ```{r}
-str(simulation)
-head(simulation)
-with(simulation, {
-  plot(Susceptible,col="blue",type="l",lwd=2,
-       xlab="time step",ylab="number of individuals")
-  lines(Infectious,col="red",lwd=2)
-  lines(Recovered,col="green",lwd=2)
-})
-legend("right",c("susceptible","infected","recovered"),
-       col=c("blue","red","green"),lwd=2,lty=1,bty="n")
+getoutputnames(experimentclone1)
 ```
+
+The parameters of the model:
+
+```{r}
+getparameternames(experimentclone1)
+```
+
+Setting the values of the parameters (i.e. initial values of state variables
+and model paramters):
+
+```{r}
+experimentclone1 <- setparametervalue(experimentclone1,"S0",990)
+experimentclone1 <- setparametervalue(experimentclone1,"I0",10)
+experimentclone1 <- setparametervalue(experimentclone1,"R0",0)
+experimentclone1 <- setparametervalue(experimentclone1,"beta",.3)
+experimentclone1 <- setparametervalue(experimentclone1,"gamma",.1)
+```
+
+Setting the frame rate of the monitored variable:
+
+```{r}
+experimentclone1 <- setoutputframerate(experimentclone1,"susceptibles",1)
+```
+
+Setting the number of steps to simulate:
+
+```{r}
+experimentclone1 <- setfinalstep(experimentclone1,2000)
+```
+
+Making a second experiment, modified from the first experiment (with new
+starting values of susceptibles and infected):
+
+```{r}
+experimentclone2 <- setparametervalue(experimentclone1,"S0",995)
+experimentclone2 <- setparametervalue(experimentclone2,"I0",5)
+```
+
+Putting the two experiment in one single experiment plan:
+
+```{r}
+experimentplan <- addtoexperimentplan(experimentclone1)
+experimentplan <- addtoexperimentplan(experimentplan,experimentclone2)
+```
+
+Running the experiment plan on one core:
+
+```{r}
+startexperimentplan(experimentplan,hpc=1)
+```
+
+
+
 
 ```{r include=F, cache=F}
 setwd("..")
@@ -106,4 +151,3 @@ knitr::opts_knit$set(root.dir=".")
 ```{r include=F, cache=F}
 unlink("tmp",T,T)
 ```
-

@@ -65,10 +65,10 @@ species individual  {
 }
 
 experiment sir type: gui {
- 	parameter "S" var: S;
-  parameter "I" var: I;
-  parameter "R" var: R;
+ 	parameter "S0" var: S;
+  parameter "I0" var: I;
+  parameter "R0" var: R;
 	parameter "beta" var: beta;
 	parameter "gamma" var: gamma;
-	output{monitor "susceptibles" value: length(individual where(each.is_susceptible));}
+	output{monitor "S" value: length(individual where(each.is_susceptible));}
 }
