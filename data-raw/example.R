@@ -1,6 +1,5 @@
 defpath("/Applications/Gama_1_7.app")
 rootexperiment <- getmodelparameter("examples/sir.gaml","sir")
-#rootexperiment <- getmodelparameter("sir.gaml","sir")
 outputs <- getoutputnames(rootexperiment)
 parameters <- getparameternames(rootexperiment)
 experimentclone1 <- setparametervalue(rootexperiment,"S",990)
