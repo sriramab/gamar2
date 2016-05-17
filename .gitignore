@@ -4,3 +4,4 @@
 vignettes/using_gamar_cache/
 .DS_Store
 R/.run.R.swp
+inst/doc
