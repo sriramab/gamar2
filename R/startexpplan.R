@@ -63,5 +63,5 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
                        ignore.stdout=F,ignore.stderr=T)
 
   if(trycommand>0) return(-1)
-  return(dir(path = parameterxmlfile, pattern = "*.xml"))
+  return(dir(path = parameterxmlfile, pattern = "*.xml"), full.names = TRUE)
 }
