@@ -15,7 +15,7 @@ getsimulationid <- function(dictionary)
 
 ################################################################################
 
-setexperimentid <- function(dictionary,value)
+setsimulationid <- function(dictionary,value)
   setsimulationparam("id",dictionary,value)
 
 ################################################################################
