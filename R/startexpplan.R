@@ -65,3 +65,20 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
   if(trycommand>0) return(-1)
   return(dir(path = outputdirectory, pattern = "*.xml",  full.names = TRUE))
 }
+
+################################################################################
+
+runexpplan <- function(plan,hpc) {
+  outfiles <- startexperimentplan(plan,hpc)
+  vars <- lapply(plan,function(x)getoutputnames(list(Simulation=x)))
+  fct1 <- function(exp,var) getoutputs(getoutputfile(exp),var)
+  fct2 <- function(out,var) {
+    tmp <- lapply(var,function(x)fct1(out,x))
+    tmp <- Reduce(function(...)merge(...,by="steps"),tmp)
+    names(tmp) <- c("step",var)
+    tmp
+  }
+  out <- mapply(fct2,outfiles,vars,SIMPLIFY=F)
+  names(out) <- names(plan)
+  out
+}
