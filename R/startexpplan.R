@@ -73,17 +73,21 @@ runexpplan <- function(plan,hpc) {
   outfiles <- startexperimentplan(plan,hpc)
 # retrieve the variables names of each experiment:
   vars <- lapply(plan,function(x)getoutputnames(list(Simulation=x)))
-# fct1 retrieve one variable for one experiment
+# fct1 retrieves variable "var" of experiment "exp"
   fct1 <- function(exp,var) getoutputs(getoutputfile(exp),var)
-# fct2 calls fct1 to retrieve all variables of all experiments:
-  fct2 <- function(out,var) {
-    tmp <- lapply(var,function(x)fct1(out,x))
-    suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"),tmp))
-    names(tmp) <- c("step",var)
+# fct2 calls fct1 to retrieve variables "vars" of experiment "exp". If the time
+# frames of all the variables are the same, it further aggregates them in a
+# data frame.
+  fct2 <- function(exp,vars) {
+    tmp <- lapply(vars,function(x)fct1(exp,x))
+    if(length(unique(sapply(tmp,length)))<2) {
+      suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"),tmp))
+      names(tmp) <- c("step",vars)
+    }
     tmp
   }
+# retrieving all the variables of all the experiments:
   out <- mapply(fct2,outfiles,vars,SIMPLIFY=F)
 # return output:
-  names(out) <- names(plan)
   out
 }
