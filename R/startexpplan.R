@@ -69,9 +69,13 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
 ################################################################################
 
 runexpplan <- function(plan,hpc) {
+# run all the experiments of the plan:
   outfiles <- startexperimentplan(plan,hpc)
+# retrieve the variables names of each experiment:
   vars <- lapply(plan,function(x)getoutputnames(list(Simulation=x)))
+# fct1 retrieve one variable for one experiment
   fct1 <- function(exp,var) getoutputs(getoutputfile(exp),var)
+# fct2 calls fct1 to retrieve all variables of all experiments:
   fct2 <- function(out,var) {
     tmp <- lapply(var,function(x)fct1(out,x))
     tmp <- Reduce(function(...)merge(...,by="steps"),tmp)
@@ -79,6 +83,7 @@ runexpplan <- function(plan,hpc) {
     tmp
   }
   out <- mapply(fct2,outfiles,vars,SIMPLIFY=F)
+# return output:
   names(out) <- names(plan)
   out
 }
