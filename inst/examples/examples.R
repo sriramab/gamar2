@@ -24,4 +24,4 @@ with(sim1,plot(steps,output,type="l",lwd=2,col="blue",
                ylab="number of individuals"))
 # alternatively, running it automatically:
 output <- runexpplan(experimentplan,2)
-with(output$experiment1,plot(step,I,type="l",lwd=2,col="red"))
+with(output[[1]],plot(step,I,type="l",lwd=2,col="red"))
