@@ -78,7 +78,7 @@ runexpplan <- function(plan,hpc) {
 # fct2 calls fct1 to retrieve all variables of all experiments:
   fct2 <- function(out,var) {
     tmp <- lapply(var,function(x)fct1(out,x))
-    tmp <- Reduce(function(...)merge(...,by="steps"),tmp)
+    suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"),tmp))
     names(tmp) <- c("step",var)
     tmp
   }
