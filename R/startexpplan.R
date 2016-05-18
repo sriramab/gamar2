@@ -84,6 +84,7 @@ runexpplan <- function(plan,hpc) {
       suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"),tmp))
       names(tmp) <- c("step",vars)
     }
+    attr(tmp,"path") <- exp
     tmp
   }
 # retrieving all the variables of all the experiments:
