@@ -89,6 +89,12 @@ runexpplan <- function(plan,hpc) {
   }
 # retrieving all the variables of all the experiments:
   out <- mapply(fct2,outfiles,vars,SIMPLIFY=F)
+# deleting the "workspace" folder:
+  unlink("workspace",T,T)
 # return output:
   out
 }
+
+################################################################################
+
+cleaning <- function() unlink("workgamar",T,T)
