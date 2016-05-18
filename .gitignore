@@ -4,4 +4,6 @@
 .DS_Store
 R/.run.R.swp
 inst/doc
-vignettes/gamar_cache/*
+vignettes/gamar_cache
+workgamar
+workspace
