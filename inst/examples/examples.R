@@ -18,7 +18,9 @@ experimentplan <- addtoexperimentplan(experimentplan,experiment2)
 names(experimentplan) <- paste0("experiment",1:2)
 # running it manually:
 outfiles <- startexperimentplan(experimentplan,hpc=2)
-sim1 <- getoutputs(getoutputfile(outfiles[[1]]),"S")
+# Extract the S values (corresponding to THE getoutputnames(experimentclone1) )
+sim1 <- getoutputs(getoutputfile(outfiles[[1]]),getoutputnames(experimentclone1))
+sim1[c(1:3,(nrow(sim1)-2):nrow(sim1)),]
 with(sim1,plot(steps,output,type="l",lwd=2,col="blue",
                ylab="number of individuals"))
 # alternatively, running it automatically:
