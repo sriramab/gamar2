@@ -7,3 +7,5 @@ inst/doc
 vignettes/gamar_cache
 workgamar
 workspace
+inst/examples/predator_prey/models/results.txt
+vignettes/gamar/html/__packages
