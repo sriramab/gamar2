@@ -141,26 +141,30 @@ getmodelparameter <- function(modelfile,experimentname) {
   XML::xmlToList(XML::xmlParse(outfile))
 }
 
+################################################################################
 
-#
-#
-#
-#
 getexperimentid <- function(simulation_result)
-{
-  return(simulation$.attrs["id"])
-}
+  simulation$.attrs["id"]
 
-getexperimentoutput <- function(simulation)
-{
-  out2 <- lapply(simulation,function(x) {x[which(names(x)=="Variable")]})
+################################################################################
+
+getoutputfile <- function(path)
+  XML::xmlToList(XML::xmlParse(path))
+
+################################################################################
+
+getexperimentoutput <- function(simulation) {
+  out2 <- lapply(simulation,function(x)x[which(names(x)=="Variable")])
   unname(sapply(out2[[1]],function(x)x$.attrs))
 }
 
-getoutputs <- function(simulation_result, outputs)
-{
-  out2 <- lapply(simulation_result,function(x) {x[which(names(x)=="Variable")]})
-  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
+################################################################################
+
+getoutputs <- function(simulation_result,outputs) {
+#  out2 <- lapply(simulation_result,function(x)x[which(names(x)=="Variable")])
+#  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
+# replaced by the following line:
+  thenames <- getexperimentoutput(simulation_result)
   sel <- which(thenames %in% outputs)
   out3 <- lapply(out2,function(x)x[sel])
   out3 <- out3[-length(out3)]
@@ -168,10 +172,5 @@ getoutputs <- function(simulation_result, outputs)
   if(!is.null(dim(output))) output <- t(output) else output <- as.data.frame(output,stringsAsFactors=F)
   output$steps <- as.numeric(sapply(simulation_result[-length(simulation_result)],function(x)x$.attrs["id"]))
   rownames(output) <- NULL
+  output
 }
-
-getoutputfile <- function(path)
-{
-  XML::xmlToList(XML::xmlParse(path))
-}
-
