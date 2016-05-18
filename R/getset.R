@@ -137,6 +137,8 @@ getmodelparameter <- function(modelfile,experimentname) {
                               "-application msi.gama.headless.id4 -xml ",
                               experimentname," ",modelfile," ",outfile,">/dev/null"),
                        ignore.stdout=T,ignore.stderr=T)
+# removing the "workspace" directory:
+  unlink("workspace",T,T)
   if(trycommand>0) return(-1)
   XML::xmlToList(XML::xmlParse(outfile))
 }
