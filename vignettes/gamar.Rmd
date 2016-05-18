@@ -76,7 +76,22 @@ dir(f)
 Loading the `sir` experiment defined in the `sir.gaml` file:
 
 ```{r}
+dir()
 experiment1 <- getmodelparameter(paste0(f,"/sir.gaml"),"sir")
+```
+
+Note that the function `getmodelparameter` loads GAMA and creates the
+`workgamar` folder:
+
+```{r}
+dir()
+```
+
+This folder contains at this stage an XML file containing the specifications of
+the newly created experiment:
+
+```{r}
+dir("workgamar")
 ```
 
 The parameters of the model:
@@ -134,7 +149,31 @@ experimentplan <- addtoexperimentplan(experimentplan,experiment2)
 Running the experiment plan on two cores:
 
 ```{r}
+dir("workgamar")
 output <- runexpplan(experimentplan,2)
+```
+
+Note the creation of another XML file and a folder
+
+```{r}
+dir("workgamar")
+```
+
+This later folder contains one XML file per experiment, containing the
+experiment's output, and another folder:
+
+```{r}
+dir("workgamar/out_sir_1")
+```
+
+This later folder may contain the snapshots of the simulations.
+
+At the end, we can also remove this `workgamar` folder:
+
+```{r}
+dir()
+cleaning()
+dir()
 ```
 
 Plotting the dynamics of infected of the first experiment of the plan:
@@ -148,7 +187,7 @@ with(output[[1]],{
 })
 ```
 
-## A Volta-Volterra model
+## A Lotka-Volterra model
 
 Loading the experiment `prey_predator` from the `predator_prey` model:
 
@@ -199,7 +238,8 @@ output <- runexpplan(experimentplan,1)
 Plotting the dynamics of the number of preys:
 
 ```{r}
-with(output[[1]],plot(step,`Number of preys`,type="l",lwd=2,col="red"))
+with(output[[1]],plot(step,`Number of preys`,type="l",lwd=2,col="red",
+                      ylim=c(0,1050)))
 ```
 
 
