@@ -45,6 +45,8 @@ Note that the `gamar` package depends on the `XML` package. The installation of
 `gamar` package automatically installs the `XML` too, if not already installed
 on your system. Then, you can load and attach the `gamar` library:
 
+## Using `gamar`
+
 ```{r}
 library(gamar)
 ```
@@ -69,75 +71,135 @@ There are a number of example files in the `examples` directory of the library:
 dir(f)
 ```
 
-Move the GAML and XML files of the SIR model and experiment to the working
-directory:
-
-```{r}
-dir()
-file.copy(paste0(f,"/sir.gaml"),".")
-dir()
-```
+## An SIR model
 
 Loading the `sir` experiment defined in the `sir.gaml` file:
 
 ```{r}
-experimentclone1 <- getmodelparameter("sir.gaml","sir")
-```
-
-The variable monitored during the simulation:
-
-```{r}
-getoutputnames(experimentclone1)
+experiment1 <- getmodelparameter(paste0(f,"/sir.gaml"),"sir")
 ```
 
 The parameters of the model:
 
 ```{r}
-getparameternames(experimentclone1)
+getparameternames(experiment1)
+```
+
+The variables monitored during the simulation:
+
+```{r}
+getoutputnames(experiment1)
 ```
 
 Setting the values of the parameters (i.e. initial values of state variables
 and model paramters):
 
 ```{r}
-experimentclone1 <- setparametervalue(experimentclone1,"S0",990)
-experimentclone1 <- setparametervalue(experimentclone1,"I0",10)
-experimentclone1 <- setparametervalue(experimentclone1,"R0",0)
-experimentclone1 <- setparametervalue(experimentclone1,"beta",.3)
-experimentclone1 <- setparametervalue(experimentclone1,"gamma",.1)
+experiment1 <- setparametervalue(experiment1,"S0",990)
+experiment1 <- setparametervalue(experiment1,"I0",10)
+experiment1 <- setparametervalue(experiment1,"R0",0)
+experiment1 <- setparametervalue(experiment1,"beta",.3)
+experiment1 <- setparametervalue(experiment1,"gamma",.1)
 ```
 
-Setting the frame rate of the monitored variable:
+Setting the frame rates of the monitored variables:
 
 ```{r}
-experimentclone1 <- setoutputframerate(experimentclone1,"susceptibles",1)
+experiment1 <- setoutputframerate(experiment1,"susceptibles",1)
+experiment1 <- setoutputframerate(experiment1,"infected",1)
+experiment1 <- setoutputframerate(experiment1,"recovered",1)
 ```
 
 Setting the number of steps to simulate:
 
 ```{r}
-experimentclone1 <- setfinalstep(experimentclone1,2000)
+experiment1 <- setfinalstep(experiment1,200)
 ```
 
 Making a second experiment, modified from the first experiment (with new
 starting values of susceptibles and infected):
 
 ```{r}
-experimentclone2 <- setparametervalue(experimentclone1,"S0",995)
-experimentclone2 <- setparametervalue(experimentclone2,"I0",5)
+experiment2 <- setparametervalue(experiment1,"S0",995)
+experiment2 <- setparametervalue(experiment2,"I0",5)
 ```
 
 Putting the two experiment in one single experiment plan:
 
 ```{r}
-experimentplan <- addtoexperimentplan(experimentclone1)
-experimentplan <- addtoexperimentplan(experimentplan,experimentclone2)
+experimentplan <- addtoexperimentplan(experiment1)
+experimentplan <- addtoexperimentplan(experimentplan,experiment2)
 ```
 
-Running the experiment plan on one core:
+Running the experiment plan on two cores:
 
 ```{r}
-outfiles <- startexperimentplan(experimentplan,hpc=2)
+output <- runexpplan(experimentplan,2)
+```
+
+Plotting the dynamics of infected of the first experiment of the plan:
+
+```{r}
+with(output[[1]],{
+  plot(step,I,type="l",lwd=2,col="red",
+       ylab="number of infected",ylim=c(0,1000))
+  lines(step,S,lwd=2,col="blue")
+  lines(step,R,lwd=2,col="green")
+})
+```
+
+## A Volta-Volterra model
+
+Loading the experiment `prey_predator` from the `predator_prey` model:
+
+```{r}
+experiment1 <- getmodelparameter(
+  paste0(system.file("examples",package="gamar"),
+         "/predator_prey/models/predator_prey.gaml"),"prey_predator")
+```
+
+The parameters of the model:
+
+```{r}
+getparameternames(experiment1)
+```
+
+The monitored variables of the model:
+
+```{r}
+getoutputnames(experiment1)
+```
+
+Setting the model parameters to values:
+
+```{r}
+experiment1 <- setparametervalue(experiment1,"Initial number of preys: ",990)
+experiment1 <- setparametervalue(experiment1,"Initial number of predators: ",100)
+experiment1 <- setparametervalue(experiment1,"Predator probability reproduce: ",0.1)
+```
+
+Specifying the number of steps:
+
+```{r}
+experiment1 <- setfinalstep(experiment1,100)
+```
+
+Adding the experiment to an experiment plan:
+
+```{r}
+experimentplan <- addtoexperimentplan(experiment1)
+```
+
+Running the experiment (only one here) of the plan:
+
+```{r}
+output <- runexpplan(experimentplan,1)
+```
+
+Plotting the dynamics of the number of preys:
+
+```{r}
+with(output[[1]],plot(step,`Number of preys`,type="l",lwd=2,col="red"))
 ```
 
 
