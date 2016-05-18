@@ -70,5 +70,7 @@ experiment sir type: gui {
   parameter "R0" var: R;
 	parameter "beta" var: beta;
 	parameter "gamma" var: gamma;
-	output{monitor "S" value: length(individual where(each.is_susceptible));}
+	output{monitor "S" value: length(individual where(each.is_susceptible));
+	       monitor "I" value: length(individual where(each.is_infected));
+	       monitor "R" value: length(individual where(each.is_recovered));}
 }
