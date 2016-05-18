@@ -1,4 +1,5 @@
 library(gamar)
+defpath("/Applications/Gama.app")
 file.copy(paste0(system.file("examples",package="gamar"),"/sir.gaml"),".")
 experimentclone1 <- getmodelparameter("sir.gaml","sir")
 getoutputnames(experimentclone1)
@@ -15,3 +16,6 @@ experimentclone2 <- setparametervalue(experimentclone2,"I0",5)
 experimentplan <- addtoexperimentplan(experimentclone1)
 experimentplan <- addtoexperimentplan(experimentplan,experimentclone2)
 outfiles <- startexperimentplan(experimentplan,hpc=2)
+sim1 <- getoutputs(getoutputfile(outfiles[[1]]),"S")
+with(sim1,plot(steps,output,type="l",lwd=2,col="blue",
+               ylab="number of individuals"))
