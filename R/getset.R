@@ -161,10 +161,8 @@ getexperimentoutput <- function(simulation) {
 ################################################################################
 
 getoutputs <- function(simulation_result,outputs) {
-#  out2 <- lapply(simulation_result,function(x)x[which(names(x)=="Variable")])
-#  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
-# replaced by the following line:
-  thenames <- getexperimentoutput(simulation_result)
+  out2 <- lapply(simulation_result,function(x)x[which(names(x)=="Variable")])
+  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
   sel <- which(thenames %in% outputs)
   out3 <- lapply(out2,function(x)x[sel])
   out3 <- out3[-length(out3)]
