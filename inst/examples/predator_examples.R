@@ -1,6 +1,6 @@
 library(gamar)
 defpath("/Applications/Gama.app")
-experiment1 <- getmodelparameter("/Users/nicolas/git/gamar/inst/examples/predator_prey/models/predator_prey.gaml","prey_predator")
+experiment1 <- getmodelparameter("inst/examples/predator_prey/models/predator_prey.gaml","prey_predator")
 getparameternames(experiment1)
 getoutputnames(experiment1)
 experiment1 <- setparametervalue(experiment1,"Initial number of preys: ",990)
