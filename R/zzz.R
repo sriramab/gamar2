@@ -23,6 +23,7 @@ defpath <- function(path) {
   options(gamar.Xms="512m")
 }
 
+################################################################################
 
 .onAttach <- function(...) {
   packageStartupMessage("Welcome to gamar v1.0!")
@@ -31,6 +32,8 @@ defpath <- function(path) {
 #  defpath("/Users/choisy/Applications/Gama")
 #  defpath("/Applications/Gama.app")
 }
+
+################################################################################
 
 .onDetach <- function(...) {
 #  options(gamar.plugins=NULL)
