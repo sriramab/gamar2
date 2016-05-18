@@ -15,7 +15,6 @@ experiment2 <- setparametervalue(experiment1,"S0",995)
 experiment2 <- setparametervalue(experiment2,"I0",5)
 experimentplan <- addtoexperimentplan(experiment1)
 experimentplan <- addtoexperimentplan(experimentplan,experiment2)
-names(experimentplan) <- paste0("experiment",1:2)
 # running it manually:
 outfiles <- startexperimentplan(experimentplan,hpc=2)
 # Extract the S values (corresponding to THE getoutputnames(experimentclone1) )
