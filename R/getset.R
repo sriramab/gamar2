@@ -130,20 +130,12 @@ getdefaultexperimentplanname <- function(experimentplan)
 #' @keywords internal
 getmodelparameter <- function(modelfile,experimentname) {
   outfile <- createmodelparameterfilename(experimentname)
-
-  print(paste0("java -jar ",getOption("gamar.startjar")," -Xms",
-               getOption("gamar.Xms")," -Xmx",
-               getOption("gamar.Xmx"),
-               " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
-               "-application msi.gama.headless.id4 -xml ",
-               experimentname," ",modelfile," ",outfile,">/dev/null"))
-
   trycommand <- system(paste0("java -jar ",getOption("gamar.startjar")," -Xms",
                               getOption("gamar.Xms")," -Xmx",
                               getOption("gamar.Xmx"),
                               " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
                               "-application msi.gama.headless.id4 -xml ",
-                              experimentname," ",modelfile," ",outfile),
+                              experimentname," ",modelfile," ",outfile,">/dev/null"),
                        ignore.stdout=T,ignore.stderr=T)
   if(trycommand>0) return(-1)
   XML::xmlToList(XML::xmlParse(outfile))
