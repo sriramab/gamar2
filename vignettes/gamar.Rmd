@@ -78,6 +78,14 @@ Loading the `sir` experiment defined in the `sir.gaml` file:
 ```{r}
 dir()
 experiment1 <- getmodelparameter(paste0(f,"/sir.gaml"),"sir")
+dir()
+class(experiment1)
+```
+
+The experiment:
+
+```{r}
+experiment1
 ```
 
 Note that the function `getmodelparameter` loads GAMA and creates the
