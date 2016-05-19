@@ -129,6 +129,7 @@ getdefaultexperimentplanname <- function(experimentplan)
 #' @param experimentname name of the loaded experiment
 #' @keywords internal
 getmodelparameter <- function(modelfile,experimentname) {
+  cat(paste0("Loading experiment '",experimentname,"' from file '",basename(modelfile),"'...\n"))
   outfile <- createmodelparameterfilename(experimentname)
   trycommand <- system(paste0("java -jar ",getOption("gamar.startjar")," -Xms",
                               getOption("gamar.Xms")," -Xmx",
