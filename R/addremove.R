@@ -24,7 +24,9 @@ removeoutput <- function(dictionary,name)
 ################################################################################
 
 addtoexperimentplan <- function(simulation,experimentplan=list()) {
-  simulation <- setsimulationid(simulation, length(experimentplan))
+  simulation <- setsimulationid(simulation,length(experimentplan))
   experimentplan <- append(experimentplan,simulation)
+  class(experimentplan) <- "plan"
+  class(experimentplan[[length(experimentplan)]]) <- "experiment"
   experimentplan
 }
