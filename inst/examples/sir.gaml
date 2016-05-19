@@ -1,6 +1,6 @@
 model sir
 
-// (1) the world:
+// (1) the world: --------------------------------------------------------------
 global {
   int S <- 999; // number of susceptible
   int I <- 1;   // number of infected
@@ -30,7 +30,7 @@ global {
 	}
 }
 
-// (2) the species: (here only one)
+// (2) the species: (here only one) --------------------------------------------
 species individual  {
 	bool is_susceptible;
 	bool is_infected;
@@ -64,6 +64,7 @@ species individual  {
   }
 }
 
+// (3) the experiments: --------------------------------------------------------
 experiment sir type: gui {
  	parameter "S0" var: S;
   parameter "I0" var: I;
