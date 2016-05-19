@@ -38,16 +38,6 @@ global {
 		}
 	}
 
-	reflex save_result when: (nb_preys > 0) and (nb_predators > 0){
-		save ("cycle: "+ cycle + "; nbPreys: " + nb_preys
-			+ "; minEnergyPreys: " + ((prey as list) min_of each.energy)
-			+ "; maxSizePreys: " + ((prey as list) max_of each.energy)
-	   		+ "; nbPredators: " + nb_predators
-	   		+ "; minEnergyPredators: " + ((predator as list) min_of each.energy)
-	   		+ "; maxSizePredators: " + ((predator as list) max_of each.energy))
-	   		to: "results.txt" type: "text" ;
-	}
-
 }
 
 species generic_species {
