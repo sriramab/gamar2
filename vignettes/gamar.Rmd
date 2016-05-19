@@ -242,7 +242,13 @@ with(output[[1]],plot(step,`Number of preys`,type="l",lwd=2,col="red",
                       ylim=c(0,1050)))
 ```
 
+We can also generate a movie of the simulation of one experiment:
 
+```{r}
+dir()
+makemovie(output[[1]])
+dir()
+```
 
 
 ```{r include=F, cache=F}
