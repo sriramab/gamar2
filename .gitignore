@@ -7,7 +7,4 @@ inst/doc
 vignettes/gamar_cache
 workgamar
 workspace
-inst/examples/predator_prey/models/results.txt
-vignettes/gamar_cache/__packages
-results.txt
 animation.gif
