@@ -140,7 +140,9 @@ getmodelparameter <- function(modelfile,experimentname) {
 # removing the "workspace" directory:
   unlink("workspace",T,T)
   if(trycommand>0) return(-1)
-  XML::xmlToList(XML::xmlParse(outfile))
+  out <- XML::xmlToList(XML::xmlParse(outfile))
+  class(out) <- c("experiment",class(out)) # adding the class
+  out
 }
 
 ################################################################################
