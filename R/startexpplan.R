@@ -52,6 +52,7 @@ writemodelparameterfile <- function(experimentplan) {
 ################################################################################
 
 startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
+  cat(paste0("Running experiment plan '",experimentplan,"'..."))
   parameterxmlfile <- writemodelparameterfile(experimentplan)
   if(outputdirectory=="")
     outputdirectory <- createoutputdirectoryname(experimentplan)
