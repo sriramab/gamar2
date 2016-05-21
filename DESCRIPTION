@@ -9,6 +9,7 @@ Description: Interface to use and access the GAMA simulation platform from R
   using the headless mode.
 License: GPL (>= 2)
 LazyData: TRUE
+URL: http://choisy.github.io/gamar
 Depends: R (>= 3.2.3)
 Imports: XML (>= 3.98-1.3)
 Suggests: knitr,
