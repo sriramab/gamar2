@@ -49,6 +49,14 @@ writemodelparameterfile <- function(experimentplan) {
   outfile
 }
 
+writemodelparameterfile <- function(experimentplan,outfile) {
+ #' outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
+  xml <- buildxmlfromexperimentplan(experimentplan)
+  write(xml,outfile,sep="")
+  outfile
+}
+
+
 ################################################################################
 
 startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
