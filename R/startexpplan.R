@@ -53,13 +53,9 @@ createoutputdirectoryname <- function(experimentplan) {
 #  }
 
 writemodelparameterfile <- function(experimentplan,outfile ="") {
-  print("fdsqfd fdsqf qfdsq fqsdf qs ")
-
   if(outfile == "")
     outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
-
-  print("outfileFDFDSQFDSQFDSQFDQSFSDQFSDQ")
-  xml <- buildxmlfromexperimentplan(experimentplan)
+   xml <- buildxmlfromexperimentplan(experimentplan)
   write(xml,outfile,sep="")
   outfile
 }
@@ -68,9 +64,7 @@ writemodelparameterfile <- function(experimentplan,outfile ="") {
 ################################################################################
 
 startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
-  cat(paste0("www  Running experiment plan '",experimentplan,"'..."))
-
-  cat("coucouf  sdqfsq")
+  cat(paste0("Running experiment plan '",experimentplan,"'..."))
   parameterxmlfile <- writemodelparameterfile(experimentplan)
   if(outputdirectory=="")
     outputdirectory <- createoutputdirectoryname(experimentplan)
