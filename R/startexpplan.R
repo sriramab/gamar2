@@ -42,15 +42,23 @@ createoutputdirectoryname <- function(experimentplan) {
 #'
 #' @inheritParams run
 #' @param experimentplan  experiment plan to store
-writemodelparameterfile <- function(experimentplan) {
-  outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
-  xml <- buildxmlfromexperimentplan(experimentplan)
-  write(xml,outfile,sep="")
-  outfile
-}
 
-writemodelparameterfile <- function(experimentplan,outfile) {
- #' outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
+
+
+#  writemodelparameterfile <- function(experimentplan) {
+#    outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
+#    xml <- buildxmlfromexperimentplan(experimentplan)
+#    write(xml,outfile,sep="")
+#    outfile
+#  }
+
+writemodelparameterfile <- function(experimentplan,outfile ="") {
+  print("fdsqfd fdsqf qfdsq fqsdf qs ")
+
+  if(outfile == "")
+    outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
+
+  print("outfileFDFDSQFDSQFDSQFDQSFSDQFSDQ")
   xml <- buildxmlfromexperimentplan(experimentplan)
   write(xml,outfile,sep="")
   outfile
@@ -60,7 +68,9 @@ writemodelparameterfile <- function(experimentplan,outfile) {
 ################################################################################
 
 startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
-  cat(paste0("Running experiment plan '",experimentplan,"'..."))
+  cat(paste0("www  Running experiment plan '",experimentplan,"'..."))
+
+  cat("coucouf  sdqfsq")
   parameterxmlfile <- writemodelparameterfile(experimentplan)
   if(outputdirectory=="")
     outputdirectory <- createoutputdirectoryname(experimentplan)
@@ -68,7 +78,7 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
                               getOption("gamar.Xms")," -Xmx",getOption("gamar.Xmx"),
                               " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
                               "-application msi.gama.headless.id4 -hpc ",hpc," ",
-                              parameterxmlfile," ",outputdirectory,">/dev/null"),
+                              parameterxmlfile," ",outputdirectory), ##,">/dev/null"*/),
                        ignore.stdout=F,ignore.stderr=T)
 
   if(trycommand>0) return(-1)
