@@ -72,7 +72,7 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
                               getOption("gamar.Xms")," -Xmx",getOption("gamar.Xmx"),
                               " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
                               "-application msi.gama.headless.id4 -hpc ",hpc," ",
-                              parameterxmlfile," ",outputdirectory, ">/dev/null"),
+                              parameterxmlfile," ",outputdirectory, " >/dev/null"),
                        ignore.stdout=F,ignore.stderr=T)
 
   if(trycommand>0) return(-1)
